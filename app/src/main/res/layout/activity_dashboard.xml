@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageviewToolbar"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Recent Detections:"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
+    <include
+        android:id="@+id/imageviewToolbar"
+        layout="@layout/app_bar_layout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"></include>
+
+    <GridView
+        android:id="@+id/gv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/label"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:columnWidth="110dp"
+        android:horizontalSpacing="5dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="spacingWidthUniform"
+        android:verticalSpacing="5dp">
+
+    </GridView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabSettings"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="20dp"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/settings" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabPlus"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/plus" />
+
+</RelativeLayout>

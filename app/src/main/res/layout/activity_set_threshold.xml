@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SetThreshold">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_below="@+id/st_ll"
+        android:layout_marginTop="10dp"
+        android:text="Input Manually:"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
+    <include
+        android:id="@+id/imageviewToolbar"
+        layout="@layout/app_bar_layout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"></include>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageviewToolbar"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Use Presets:"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="normal" />
+
+    <LinearLayout
+        android:id="@+id/st_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/st_presetCloserBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="Closer Objects"
+            android:textColor="@android:color/background_light" />
+
+        <Button
+            android:id="@+id/st_presetFartherBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="Farther objects"
+            android:textColor="@android:color/background_light" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/st_tValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="15"
+        android:textSize="70sp" />
+
+    <SeekBar
+        android:id="@+id/sb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/st_tValue"
+        android:layout_marginTop="10dp"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/st_startBtn"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/holo_blue_dark"
+        android:text="START"
+        android:textColor="@android:color/background_light"
+        android:textSize="16sp" />
+
+
+</RelativeLayout>
