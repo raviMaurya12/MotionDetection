@@ -1,11 +1,15 @@
 package com.example.lenovo.motiondetection;
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Display;
+import android.view.Surface;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
@@ -39,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     private Mat mGray;
     private Mat mRgb;
     private Mat mFGMask;
-    private Mat mrgba;
+    private Mat mrgba,mRotated;
     //private List<MatOfPoint> contours;
     //private double lRate = 0.5;
     private static int check;
@@ -77,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         super.onCreate( savedInstanceState );
         threshold=getIntent().getIntExtra( "threshold",15 );
         getWindow().addFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView( R.layout.activity_main );
 
         date=new Date();
@@ -139,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         //mFGMask denotes the foreground mask extracted by the BackgroundSubtractorMOG2 apply function
         mFGMask = new Mat();
         mGray = new Mat();
+        mRotated=new Mat();
 
         sub = Video.createBackgroundSubtractorMOG2();
         //creates a new BackgroundSubtractorMOG class with the arguments
@@ -158,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         mGray.release();
         mFGMask.release();
         mrgba.release();
+        mRotated.release();
     }
 
     @Override
@@ -199,7 +207,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         String displayText = "MOTION DETECTED";
         if (percent >= threshold && percent<=95) {
 //        modify/replace the code below such that the text "MOTION DETECTED" gets displayed on the camera preview
-            //System.out.println("MOTION DETECTED" + " foreground pixel % is" + percent);
             Imgproc.putText(mrgba, displayText,
                     new org.opencv.core.Point(mrgba.cols() / 3, mrgba.rows() / 2),
                     Core.FONT_HERSHEY_COMPLEX, 1, new Scalar(255, 255, 255));
@@ -208,13 +215,24 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             File file=new File( path,filename );
             filename=file.toString();
             Boolean bool = null;
-            bool = Imgcodecs.imwrite(filename, mrgba);
+
+            //If orientation is Landscape The the image is rotated 90 degrees before saving it.
+            Display display = ((WindowManager) this.getSystemService( Context.WINDOW_SERVICE)).getDefaultDisplay();
+            int rotation = display.getRotation();
+            //getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
+            if (rotation == Surface.ROTATION_90) {
+              //  Core.transpose(mrgba, mrgba);
+              //  Core.flip(mrgba, mrgba, 1);
+                Core.rotate(mrgba,mRotated, Core.ROTATE_90_CLOCKWISE); //ROTATE_180 or ROTATE_90_COUNTERCLOCKWISE
+            }
+            //Saving image to the location filename
+            bool = Imgcodecs.imwrite(filename, mRotated);
 
             final Boolean finalBool = bool;
             runOnUiThread( new Runnable() {
                 @Override
                 public void run() {
-                    if (finalBool == true){
+                    if (finalBool){
                         Toast.makeText( MainActivity.this, "Saved!", Toast.LENGTH_SHORT ).show();
                         flag++;
                     }
